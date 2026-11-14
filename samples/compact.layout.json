@@ -1,0 +1,23 @@
+{
+  "name": "compact",
+  "aisles": 8,
+  "baysPerAisle": 12,
+  "levels": [
+    {
+      "volume": 1.2,
+      "maxWeightKg": 1000
+    },
+    {
+      "volume": 1,
+      "maxWeightKg": 25
+    },
+    {
+      "volume": 0.6,
+      "maxWeightKg": 10
+    }
+  ],
+  "aisleSpacing": 4,
+  "bayWidth": 1,
+  "hasBackCrossAisle": true,
+  "depotAisle": 0
+}

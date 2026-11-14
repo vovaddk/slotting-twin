@@ -1,0 +1,14 @@
+<Solution>
+  <Folder Name="/benchmarks/">
+    <Project Path="benchmarks/SlottingTwin.Benchmarks/SlottingTwin.Benchmarks.csproj" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="src/SlottingTwin.Api/SlottingTwin.Api.csproj" />
+    <Project Path="src/SlottingTwin.Cli/SlottingTwin.Cli.csproj" />
+    <Project Path="src/SlottingTwin.Core/SlottingTwin.Core.csproj" />
+    <Project Path="src/SlottingTwin.Simulation/SlottingTwin.Simulation.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/SlottingTwin.Tests/SlottingTwin.Tests.csproj" />
+  </Folder>
+</Solution>

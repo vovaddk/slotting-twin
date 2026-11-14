@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Slotting Twin · warehouse digital twin</title>
+  <link rel="stylesheet" href="styles.css">
+  <script type="module" src="app.js"></script>
+</head>
+<body>
+  <header class="top">
+    <div>
+      <h1>Slotting Twin</h1>
+      <p>Digital twin of a parallel-aisle warehouse: compare slotting and pick-routing strategies on a replayed order history.</p>
+    </div>
+    <nav aria-label="Developer links"><a href="/scalar">API reference</a></nav>
+  </header>
+
+  <main>
+    <form id="controls" class="controls" aria-describedby="status">
+      <div class="field">
+        <label for="layout">Layout sample</label>
+        <select id="layout" name="layout"></select>
+      </div>
+      <div class="field">
+        <label for="slotting">Slotting strategy</label>
+        <select id="slotting" name="slotting"></select>
+      </div>
+      <div class="field">
+        <label for="routing">Routing strategy</label>
+        <select id="routing" name="routing"></select>
+      </div>
+      <div class="field">
+        <label for="order">Order</label>
+        <input id="order" name="order" list="order-ids" autocomplete="off" spellcheck="false" placeholder="random" aria-describedby="order-hint">
+        <datalist id="order-ids"></datalist>
+        <small id="order-hint">Type an order id or leave empty for a random one.</small>
+      </div>
+      <div class="field">
+        <label for="seed">Seed</label>
+        <input id="seed" name="seed" type="number" inputmode="numeric" step="1" min="0" max="2147483647" value="42" aria-describedby="seed-hint">
+        <small id="seed-hint">Drives the random baseline slotting.</small>
+      </div>
+      <div class="actions">
+        <button type="submit">Run</button>
+        <button type="button" id="random-order" class="secondary">Random order</button>
+      </div>
+    </form>
+
+    <p id="status" class="status" role="status" aria-live="polite"></p>
+
+    <section class="kpis" aria-label="Key performance indicators for the whole order history">
+      <article class="kpi">
+        <h2>Baseline travel</h2>
+        <p class="value" id="kpi-baseline">–</p>
+        <p class="note">random slotting + S-shape</p>
+      </article>
+      <article class="kpi">
+        <h2>Optimized travel</h2>
+        <p class="value" id="kpi-optimized">–</p>
+        <p class="note" id="kpi-optimized-note">selected strategies</p>
+      </article>
+      <article class="kpi accent">
+        <h2>Improvement</h2>
+        <p class="value" id="kpi-improvement">–</p>
+        <p class="note">less walking than baseline</p>
+      </article>
+      <article class="kpi">
+        <h2>Picks per metre</h2>
+        <p class="value" id="kpi-ppm">–</p>
+        <p class="note" id="kpi-ppm-note">baseline –</p>
+      </article>
+    </section>
+
+    <section class="maps" aria-label="Warehouse maps, before and after optimization">
+      <figure class="map">
+        <figcaption><strong>Before</strong> · random slotting + S-shape · <span id="dist-before">–</span></figcaption>
+        <canvas id="map-before" role="img" aria-label="Warehouse map before optimization"></canvas>
+      </figure>
+      <figure class="map">
+        <figcaption><strong>After</strong> · <span id="after-label">–</span> · <span id="dist-after">–</span></figcaption>
+        <canvas id="map-after" role="img" aria-label="Warehouse map after optimization"></canvas>
+      </figure>
+    </section>
+
+    <section class="details">
+      <div>
+        <h2>Legend</h2>
+        <ul class="legend">
+          <li><span class="swatch abc-a" aria-hidden="true"></span>A: fast movers (80 % of picks)</li>
+          <li><span class="swatch abc-b" aria-hidden="true"></span>B: next 15 % of picks</li>
+          <li><span class="swatch abc-c" aria-hidden="true"></span>C: slow movers</li>
+          <li><span class="swatch empty" aria-hidden="true"></span>Empty slot</li>
+          <li><span class="swatch route" aria-hidden="true"></span>Picker route, numbered stops</li>
+        </ul>
+        <p class="note">Colour shows the ABC class of the SKUs in a bay; stronger colour means more picks.</p>
+      </div>
+      <div>
+        <h2 id="matrix-heading">ABC-XYZ matrix</h2>
+        <table class="matrix" aria-labelledby="matrix-heading">
+          <thead><tr><th scope="col">ABC \ XYZ</th><th scope="col">X steady</th><th scope="col">Y variable</th><th scope="col">Z erratic</th></tr></thead>
+          <tbody id="matrix-body"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
